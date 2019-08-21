@@ -1,6 +1,7 @@
 package io.vnc.moviecatalog.services;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import io.vnc.moviecatalog.models.Rating;
 import io.vnc.moviecatalog.models.UserRating;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,12 @@ public class UserRatingService {
     @Autowired
     private RestTemplate restTemplate;
 
-    @HystrixCommand(fallbackMethod = "getUserRatingFallback")
+    @HystrixCommand(fallbackMethod = "getUserRatingFallback",
+            threadPoolKey = "UserRatingPool",
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "20"),
+                    @HystrixProperty(name = "maxQueueSize", value = "10")
+            })
     public UserRating getUserRating(@PathVariable("userId") String userId) {
         return restTemplate.getForObject(ratingUrl + userId, UserRating.class);
     }
