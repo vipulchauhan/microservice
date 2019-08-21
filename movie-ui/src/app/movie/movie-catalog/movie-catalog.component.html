@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <h2>Movie Catalog</h2>
+      <br/>
+
+      <table class="table table-dark table-hover">
+        <thead>
+        <tr>
+          <th>Index</th>
+          <th>Movie Name</th>
+          <th>Description</th>
+          <th>Rating</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let m of moviesList; let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{m.name}}</td>
+          <td>{{m.desc}}</td>
+          <td>{{m.ratting}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>
